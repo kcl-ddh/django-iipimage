@@ -78,8 +78,7 @@ class ImageStorage (FileSystemStorage):
             subprocess.check_call(shlex.split(command.encode('ascii')))
         except subprocess.CalledProcessError, e:
             os.remove(input_path)
-            raise IOError('Failed to convert the page image to .%s: %s' %
-                          (settings.IMAGE_SERVER_FILE_EXTENSION, e))
+            raise IOError('Failed to convert the page image to .jp2: %s' % e)
         finally:
             # Tidy up by deleting the original image, regardless of
             # whether the conversion is successful or not.
