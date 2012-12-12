@@ -10,8 +10,9 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 
-# Command-line invocation of image conversion.
+# Command-line invocations of image conversion.
 CONVERT_TO_JP2 = 'kdu_compress -i %s -o %s -rate -,4,2.34,1.36,0.797,0.466,0.272,0.159,0.0929,0.0543,0.0317,0.0185 Stiles="{1024,1024}" Cblk="{64,64}" Creversible=no Clevels=5 Corder=RPCL Cmodes=BYPASS'
+CONVERT_TO_JP2_LOSSLESS = 'kdu_compress -i "%s" -o "%s" -rate - Creversible=yes Clevels=5 Stiles="{1024,1024}" Cblk="{64,64}" Corder=RPCL'
 CONVERT_TO_TIFF = 'convert -compress None %s %s'
 
 
