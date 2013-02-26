@@ -134,11 +134,20 @@ def get_image_path (instance, filename):
         # uploaded, so load the original record.
         original = instance._default_manager.get(pk=instance.id)
         image_path = original.image.name
-        # The original image file must be deleted or else the save
-        # will add a suffix to `image_path`.
-        original.image.delete(save=False)
+        if not image_path:
+            # While the model instance exists, it previously had no
+            # image, so generate a new image path.
+            image_path = generate_new_image_path()
+        else:
+            # The original image file must be deleted or else the save
+            # will add a suffix to `image_path`.
+            original.image.delete(save=False)
     else:
-        filename = str(uuid.uuid4())
-        directory = filename[0]
-        image_path = '%s/%s.jp2' % (directory, filename)
+        image_path = generate_new_image_path()
+    return image_path
+
+def generate_new_image_path ():
+    filename = str(uuid.uuid4())
+    directory = filename[0]
+    image_path = '%s/%s.jp2' % (directory, filename)
     return image_path
