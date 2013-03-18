@@ -34,7 +34,7 @@ class ImageFieldFile (models.fields.files.ImageFieldFile):
             width = '&WID=%s' % str(int(width))
         except (TypeError, ValueError):
             width = ''
-        return '%s&CVT=JPEG%s%s' % (self.full_base_url, height, width)
+        return '%s%s%s&CVT=JPEG' % (self.full_base_url, height, width)
 
 
 class ImageField (models.ImageField):
