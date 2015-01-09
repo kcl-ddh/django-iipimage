@@ -23,3 +23,19 @@ In the model definition, use something along the following lines:
 `iipimage.fields.ImageField` supports the `height_field` and
 `width_field` arguments, and has a `thumbnail_url` method that returns
 a URL for a thumbnail at the specified height and/or width.
+
+For example, to provide a thumbnail suitable for use in Django's admin
+as well as elsewhere, the following method on the image's model should
+suffice:
+
+    from django.utils.safestring import mark_safe
+
+    def thumbnail (self, height=100):
+        """Displays a thumbnail-sized version of this image."""
+        html = ''
+        if self.id:
+            url = image.thumbnail_url(height=height)
+            html = mark_safe('<img height="{}" src="{}">'.format(height, url))
+        return html
+    thumbnail.allow_tags = True
+    thumbnail.short_description = 'Thumbnail'
