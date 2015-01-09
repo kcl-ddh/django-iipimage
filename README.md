@@ -30,12 +30,16 @@ suffice:
 
     from django.utils.safestring import mark_safe
 
-    def thumbnail (self, height=100):
-        """Displays a thumbnail-sized version of this image."""
-        html = ''
-        if self.id:
-            url = image.thumbnail_url(height=height)
-            html = mark_safe('<img height="{}" src="{}">'.format(height, url))
-        return html
-    thumbnail.allow_tags = True
-    thumbnail.short_description = 'Thumbnail'
+    class Image (models.Model):
+
+        [...]
+
+        def thumbnail (self, height=100):
+            """Displays a thumbnail-sized version of this image."""
+            html = ''
+            if self.id:
+                url = image.thumbnail_url(height=height)
+                html = mark_safe('<img height="{}" src="{}">'.format(height, url))
+            return html
+        thumbnail.allow_tags = True
+        thumbnail.short_description = 'Thumbnail'
